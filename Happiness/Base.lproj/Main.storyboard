@@ -29,6 +29,9 @@
                             <constraint firstItem="Icm-94-Asm" firstAttribute="leading" secondItem="D78-ys-UOD" secondAttribute="leading" id="uKj-wb-xyK"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="faceView" destination="Icm-94-Asm" id="HZL-lE-aRq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="knJ-9G-cPT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
