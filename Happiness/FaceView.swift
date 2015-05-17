@@ -48,7 +48,29 @@ class FaceView: UIView
         
         let eyePath = UIBezierPath(arcCenter: eyeCenter, radius: eyeRadius, startAngle: 0, endAngle: CGFloat(2*M_PI), clockwise: true)
         eyePath.lineWidth = lineWidth
+        
         return eyePath
+    }
+    
+    private func bezierPathForSmile(fractionOfMaxSmile: Double) -> UIBezierPath
+    {
+        let mouthWidth = faceRadius / Scaling.FaceRadiusToMouthWidthRatio
+        let mouthHeight = faceRadius / Scaling.FaceRadiusToMouthHeigthRatio
+        let mouthVerticalOffset = faceRadius / Scaling.FaceRadiusToMouthOffsetRatio
+        
+        let smileHeight = CGFloat(max(min(fractionOfMaxSmile, 1), -1)) * mouthHeight
+        
+        let start = CGPoint(x: faceCenter.x - mouthWidth / 2, y: faceCenter.y + mouthVerticalOffset)
+        let end = CGPoint(x: start.x + mouthWidth, y: start.y)
+        let cp1 = CGPoint(x: start.x + mouthWidth / 3, y: start.y + smileHeight)
+        let cp2 = CGPoint(x: end.x - mouthWidth / 3, y: cp1.y)
+        
+        let smilePath = UIBezierPath()
+        smilePath.moveToPoint(start)
+        smilePath.addCurveToPoint(end, controlPoint1: cp1, controlPoint2: cp2)
+        smilePath.lineWidth = lineWidth
+        
+        return smilePath
     }
     
     override func drawRect(rect: CGRect)
@@ -60,5 +82,9 @@ class FaceView: UIView
         
         bezierPathForEye(.Left).stroke()
         bezierPathForEye(.Right).stroke()
+        
+        let smiliness = 0.75
+        let smilePath = bezierPathForSmile(smiliness)
+        smilePath.stroke()
     }
 }
