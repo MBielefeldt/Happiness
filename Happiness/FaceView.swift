@@ -8,11 +8,13 @@
 
 import UIKit
 
+@IBDesignable
 class FaceView: UIView
 {
-    var lineWidth: CGFloat = 3 { didSet { setNeedsDisplay() } }
-    var color = UIColor.blueColor() { didSet { setNeedsDisplay() } }
-    var scale: CGFloat = 0.90 { didSet { setNeedsDisplay() } }
+    @IBInspectable var lineWidth: CGFloat = 3 { didSet { setNeedsDisplay() } }
+    @IBInspectable var color = UIColor.blueColor() { didSet { setNeedsDisplay() } }
+    @IBInspectable var scale: CGFloat = 0.90 { didSet { setNeedsDisplay() } }
+    @IBInspectable var smiliness: Double = 0.75 { didSet { setNeedsDisplay() } }
     
     var faceCenter: CGPoint {
         return convertPoint(center, fromView: superview)
@@ -83,7 +85,6 @@ class FaceView: UIView
         bezierPathForEye(.Left).stroke()
         bezierPathForEye(.Right).stroke()
         
-        let smiliness = 0.75
         let smilePath = bezierPathForSmile(smiliness)
         smilePath.stroke()
     }
